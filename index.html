@@ -2,61 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VeriDwell – Coming Soon</title>
-  <!-- Inter font + main CSS -->
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>VeriDwell — Coming Soon</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
-  <!-- Google reCAPTCHA -->
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
-  <!-- TOP: half-spin V logo -->
+
+  <!-- TOP: spin once -->
   <div class="logo-wrap">
-    <img src="v-logo.png" alt="VeriDwell V" class="logo spin-once"/>
+    <img src="veridwell-logo.png" alt="V" class="logo spin-once"/>
   </div>
 
-  <!-- Heading + subtitle -->
+  <!-- Heading -->
   <h1 class="main-title">Join the VeriDwell community</h1>
   <p class="subtitle">Where verified is your new home secured.</p>
 
-  <!-- ROLE BUTTONS -->
-  <div class="role-container">
-    <div class="role" data-role="renter">
-      <img src="icon-renter.svg" alt="" class="role-icon"/>
-      <span class="role-text">Renter</span>
-    </div>
-    <div class="role" data-role="landlord">
-      <img src="icon-landlord.svg" alt="" class="role-icon"/>
-      <span class="role-text">Landlord</span>
-    </div>
-    <div class="role" data-role="management">
-      <img src="icon-management.svg" alt="" class="role-icon"/>
-      <span class="role-text">Management Company</span>
-    </div>
+  <!-- Role buttons with emoji -->
+  <div class="roles">
+    <button class="role" data-role="renter">🏠<br/>Renter</button>
+    <button class="role" data-role="landlord">🏢<br/>Landlord</button>
+    <button class="role" data-role="management">💼<br/>Management Company</button>
   </div>
 
-  <!-- FORM + PREVIEW -->
+  <!-- Bubbles + preview -->
   <div class="form-preview">
     <div class="bubbles">
       <div class="bubble" data-field="name">
-        <input type="text" placeholder="Your name" required>
-        <span class="bubble-check">✓</span>
+        <input type="text" placeholder="Your name"/>
+        <span class="ok">✓</span>
       </div>
       <div class="bubble" data-field="email">
-        <input type="email" placeholder="Your email" required>
-        <span class="bubble-check">✓</span>
+        <input type="email" placeholder="Your email"/>
+        <span class="ok">✓</span>
       </div>
     </div>
-    <div class="preview-img-wrap">
-      <img src="" alt="" id="preview-img"/>
+    <div class="preview-img">
+      <img src="" id="previewImg" alt="Preview"/>
     </div>
   </div>
 
   <!-- reCAPTCHA -->
   <div class="g-recaptcha" data-sitekey="6LdVaY0rAAAAAHJWgsSBnTlAxTaQiGrgqF-gZXSz"></div>
 
-  <!-- BOTTOM: cards + footer -->
+  <!-- Bottom cards + footer -->
   <section class="bottom">
     <div class="card">
       <h2>Rent Without the Risk.</h2>
@@ -65,15 +55,13 @@
         <li>Deposits Held Securely in Escrow</li>
         <li>Payments Reported to Build Your Credit</li>
       </ul>
-      <img src="photo2.png" alt="Happy couple"/>
+      <img src="photo2.png" alt="Couple"/>
       <p class="caption">Your home Verified!</p>
     </div>
-
-    <div class="footer-center">
-      <img src="veridwell-logo.png" alt="VeriDwell Logo" class="footer-logo"/>
-      <span class="copyright">© VeriDwell</span>
+    <div class="center-logo">
+      <img src="veridwell-logo.png" alt="VeriDwell" class="footer-logo"/>
+      <p>© VeriDwell</p>
     </div>
-
     <div class="card">
       <h2>Verify Tenants Quickly.</h2>
       <ul>
@@ -81,50 +69,45 @@
         <li>Streamlined Rent Collection</li>
         <li>No Upfront Cost to List Properties</li>
       </ul>
-      <img src="photo1.png" alt="Happy landlord"/>
+      <img src="photo1.png" alt="Landlord"/>
       <p class="caption">Your home Verified!</p>
     </div>
   </section>
 
-  <!-- INTERACTIONS -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // 1) Logo spin removal
+      // spin removal
       const logo = document.querySelector('.spin-once');
       logo.addEventListener('animationend', () => logo.classList.remove('spin-once'));
 
-      // 2) Role selection
-      const roleEls = document.querySelectorAll('.role');
-      const previewImg = document.getElementById('preview-img');
+      // role selection
+      const roles = document.querySelectorAll('.role');
       const bubbles = document.querySelector('.bubbles');
-      const bubbleEls = document.querySelectorAll('.bubble');
-      roleEls.forEach(r => {
-        r.addEventListener('click', () => {
-          // highlight
-          roleEls.forEach(x => x.classList.remove('selected'));
-          r.classList.add('selected');
-          // show form & bubbles
+      const previewImg = document.getElementById('previewImg');
+      roles.forEach(btn => {
+        btn.onclick = () => {
+          roles.forEach(r=>r.classList.remove('selected'));
+          btn.classList.add('selected');
           bubbles.classList.add('active');
-          // load preview image
           const map = {
-            renter: 'photo2.png',
-            landlord: 'photo1.png',
-            management: 'photo2.png'
+            renter:'photo2.png',
+            landlord:'photo1.png',
+            management:'photo2.png'
           };
-          previewImg.src = map[r.dataset.role] || '';
-        });
+          previewImg.src = map[btn.dataset.role];
+        };
       });
 
-      // 3) Bubble blur -> done
-      bubbleEls.forEach(b => {
-        const inp = b.querySelector('input');
-        inp.addEventListener('blur', () => {
-          const vals = [...bubbleEls].map(x=>x.querySelector('input').value.trim());
-          if (vals.every(v=>v!=='') && document.querySelector('.role.selected')) {
+      // bubble blur -> done
+      document.querySelectorAll('.bubble input').forEach(input => {
+        input.onblur = () => {
+          const vals = [...document.querySelectorAll('.bubble input')]
+            .map(i=>i.value.trim());
+          if (vals.every(v=>v)) {
             bubbles.classList.remove('active');
-            bubbleEls.forEach(x=>x.classList.add('done'));
+            document.querySelectorAll('.bubble').forEach(b=>b.classList.add('done'));
           }
-        });
+        };
       });
     });
   </script>
