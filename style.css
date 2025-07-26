@@ -1,3 +1,4 @@
+/* style.css */
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
@@ -6,10 +7,21 @@ body {
   text-align: center;
   padding: 2rem;
 }
-img.logo {
+
+/* Spinning logo */
+.logo {
   width: 180px;
-  margin-bottom: 1rem;
+  margin: 0 auto 1rem;
 }
+.logo-spin {
+  display: inline-block;
+  animation: spin 4s linear infinite;
+  margin-bottom: 2rem;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 h1 {
   font-size: 1.75rem;
   margin-bottom: 0.5rem;
@@ -18,40 +30,117 @@ p {
   font-size: 1rem;
   margin-bottom: 1.5rem;
 }
+
+/* Bubble inputs */
+.bubble-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.bubble {
+  position: relative;
+  background: #f59e0b;
+  border-radius: 50%;
+  width: 3rem; height: 3rem;
+  cursor: pointer;
+  overflow: hidden;
+  transition: width .3s ease, border-radius .3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bubble.open {
+  width: 16rem;
+  border-radius: 1.5rem;
+}
+.bubble .label {
+  position: absolute;
+  left: 1rem;
+  opacity: 0;
+  transition: opacity .3s ease;
+  color: white;
+  font-weight: bold;
+}
+.bubble.open .label {
+  opacity: 1;
+}
+.bubble input {
+  position: absolute;
+  left: 1rem; top: 50%;
+  transform: translateY(-50%);
+  width: calc(100% - 4rem);
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 1rem;
+  opacity: 0;
+  transition: opacity .3s ease;
+  color: white;
+}
+.bubble.open input {
+  opacity: 1;
+}
+.bubble .check {
+  position: absolute;
+  right: 1rem; top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.25rem;
+  opacity: 0;
+  color: white;
+  font-weight: bold;
+}
+.bubble.filled .check {
+  opacity: 1;
+}
+
+/* Role checkboxes */
+.checkbox-group {
+  text-align: left;
+  max-width: 400px;
+  margin: 0 auto 1.5rem;
+}
+.checkbox-group label {
+  display: block;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  color: #1e3c82;
+}
+
+/* Form wrapper */
 form {
   max-width: 400px;
   margin: 0 auto 2rem;
-  padding: 1rem;
   background: #fff;
+  padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.05);
 }
-input[type="email"], button {
-  width: 100%;
-  padding: 0.75rem;
-  margin-top: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
+
+/* reCAPTCHA container */
+.g-recaptcha {
+  margin: 1.5rem 0;
+  display: flex;
+  justify-content: center;
 }
-button {
+
+/* Submit button */
+button[type="submit"] {
+  width: 100%;
   background-color: #1e3c82;
   color: white;
   cursor: pointer;
   transition: background 0.3s ease;
+  font-size: 1rem;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 6px;
 }
-button:hover {
+button[type="submit"]:hover {
   background-color: #163066;
 }
-.checkbox-group {
-  text-align: left;
-  margin-top: 1rem;
-}
-.checkbox-group label {
-  display: block;
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
-}
+
+/* Previews */
 .images {
   display: flex;
   justify-content: center;
@@ -65,9 +154,25 @@ button:hover {
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
+
+/* Coming Soon banner */
 .coming-soon {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #333;
-  margin-top: 1rem;
+  color: #888;
+  margin-bottom: 2rem;
+}
+
+/* Footer */
+.site-footer {
+  text-align: center;
+  margin: 3rem 0;
+}
+.footer-logo {
+  width: 6rem;
+  margin-bottom: 0.5rem;
+}
+.slogan {
+  font-size: 1rem;
+  color: #1e3c82;
 }

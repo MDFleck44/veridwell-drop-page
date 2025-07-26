@@ -1,32 +1,83 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VeriDwell - Coming Soon</title>
+
+  <!-- Fonts and CSS -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Google reCAPTCHA Script -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
-  <img src="veridwell-logo.png" alt="VeriDwell Logo" class="logo" />
+
+  <!-- Spinning logo -->
+  <div class="logo-spin">
+    <img src="veridwell-logo.png" alt="VeriDwell Logo" class="logo">
+  </div>
+
   <h1>Welcome to VeriDwell</h1>
-  <p>Sign up now to get notified when we go live.</p>
+  <p>We’re building something amazing. Sign up to be first in line when we launch!</p>
 
   <form action="https://formspree.io/f/xyzpzeqo" method="POST">
-    <input type="email" name="email" placeholder="Enter your email" required />
+    <!-- Bubble inputs -->
+    <div class="bubble-container">
+      <div class="bubble" data-field="name">
+        <span class="label">Name</span>
+        <input type="text" name="name" placeholder="Your name" required>
+        <span class="check">✓</span>
+      </div>
+      <div class="bubble" data-field="email">
+        <span class="label">Email</span>
+        <input type="email" name="email" placeholder="you@example.com" required>
+        <span class="check">✓</span>
+      </div>
+    </div>
+
+    <!-- Role checkboxes -->
     <div class="checkbox-group">
       <label><input type="checkbox" name="role" value="Landlord" /> Potential Landlord</label>
       <label><input type="checkbox" name="role" value="Renter" /> Potential Renter</label>
-      <label><input type="checkbox" name="role" value="Management Company" /> Potential Management Company</label>
+      <label><input type="checkbox" name="role" value="Mgmt" /> Management Company</label>
     </div>
+
+    <!-- reCAPTCHA -->
+    <div class="g-recaptcha" data-sitekey="6LdVaY0rAAAAAHJWgsSBnTlAxTaQiGrgqF-gZXSz"></div>
+
     <button type="submit">Notify Me</button>
   </form>
 
+  <!-- Previews -->
   <div class="images">
     <img src="photo1.png" alt="Preview 1" />
     <img src="photo2.png" alt="Preview 2" />
   </div>
 
-  <div class="coming-soon">Coming Soon!</div>
+  <!-- Coming Soon banner -->
+  <div class="coming-soon">Full Site Coming Soon</div>
+
+  <!-- Footer with logo & slogan -->
+  <footer class="site-footer">
+    <img src="veridwell-logo.png" alt="VeriDwell Logo" class="footer-logo" />
+    <p class="slogan">Verified Rentals Made Easy</p>
+  </footer>
+
+  <!-- Bubble open/close + checkmark script -->
+  <script>
+    document.querySelectorAll('.bubble').forEach(bubble => {
+      bubble.addEventListener('click', () => {
+        bubble.classList.toggle('open');
+        const input = bubble.querySelector('input');
+        if (bubble.classList.contains('open')) input.focus();
+      });
+      bubble.querySelector('input').addEventListener('blur', e => {
+        if (e.target.value.trim()) bubble.classList.add('filled');
+      });
+    });
+  </script>
 </body>
 </html>
