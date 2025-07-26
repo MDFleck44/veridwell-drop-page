@@ -2,106 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VeriDwell – Coming Soon</title>
 
-  <!-- Inter font + custom styles -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-
-  <!-- Google reCAPTCHA -->
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <!-- Inter font + custom stylesheet -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- 1) Logo container with one-time half-spin -->
-  <div class="logo-container">
-    <img src="veridwell-logo.png" alt="VeriDwell Logo" class="logo spin-half-once">
+  <!-- Logo (half-spin on load) -->
+  <div class="logo-wrap">
+    <img
+      src="veridwell-logo.png"
+      alt="VeriDwell Logo"
+      class="logo spin-once"
+    />
   </div>
 
-  <!-- 2) Main heading -->
-  <h1>Join the VeriDwell community</h1>
+  <!-- Heading -->
+  <h1 class="main-title">Join the VeriDwell community</h1>
+  <p class="subtitle">Where verified is your new home secured.</p>
 
-  <!-- 3) Three role bubbles -->
-  <div class="bubble-container">
-    <!-- Renter -->
-    <div class="bubble" data-role="Renter">
-      <span class="label">Renter</span>
-      <div class="form">
-        <input type="text" name="name" placeholder="Your name" required>
-        <input type="email" name="email" placeholder="Your email" required>
-        <div class="g-recaptcha" data-sitekey="6LdVaY0rAAAAAHJWgsSBnTlAxTaQiGrgqF-gZXSz"></div>
-        <button type="submit">Submit</button>
-      </div>
-      <span class="check">✓</span>
-    </div>
-
-    <!-- Owner -->
-    <div class="bubble" data-role="Owner">
-      <span class="label">Owner</span>
-      <div class="form">
-        <input type="text" name="name" placeholder="Your name" required>
-        <input type="email" name="email" placeholder="Your email" required>
-        <div class="g-recaptcha" data-sitekey="6LdVaY0rAAAAAHJWgsSBnTlAxTaQiGrgqF-gZXSz"></div>
-        <button type="submit">Submit</button>
-      </div>
-      <span class="check">✓</span>
-    </div>
-
-    <!-- Management Company -->
-    <div class="bubble" data-role="Mgmt">
-      <span class="label">Management Company</span>
-      <div class="form">
-        <input type="text" name="name" placeholder="Your name" required>
-        <input type="email" name="email" placeholder="Your email" required>
-        <div class="g-recaptcha" data-sitekey="6LdVaY0rAAAAAHJWgsSBnTlAxTaQiGrgqF-gZXSz"></div>
-        <button type="submit">Submit</button>
-      </div>
-      <span class="check">✓</span>
-    </div>
-  </div>
-
-  <!-- 4) Preview images -->
-  <div class="images">
-    <img src="photo1.png" alt="Preview 1">
-    <img src="photo2.png" alt="Preview 2">
-  </div>
-
-  <!-- 5) Footer with logo & slogan -->
-  <footer class="footer">
-    <img src="veridwell-logo.png" alt="VeriDwell Logo" class="footer-logo">
-    <p class="slogan">Verified Rentals Made Easy</p>
-  </footer>
-
-  <!-- Bubble interaction script -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Bubble open/close + checkmark
-      document.querySelectorAll('.bubble').forEach(bubble => {
-        bubble.addEventListener('click', () => {
-          if (!bubble.classList.contains('open') && !bubble.classList.contains('filled')) {
-            bubble.classList.add('open');
-            bubble.querySelector('input').focus();
-          }
-        });
-        // When both inputs have text, close & show check
-        const inputs = bubble.querySelectorAll('input');
-        inputs.forEach(input => {
-          input.addEventListener('blur', () => {
-            if ([...inputs].every(i => i.value.trim())) {
-              bubble.classList.remove('open');
-              bubble.classList.add('filled');
-            }
-          });
-        });
-      });
-
-      // Remove spin class after one animation
-      const logo = document.querySelector('.spin-half-once');
-      logo.addEventListener('animationend', () => {
-        logo.classList.remove('spin-half-once');
-      });
-    });
-  </script>
 </body>
 </html>
