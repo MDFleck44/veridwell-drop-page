@@ -1,25 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VeriDwell – Coming Soon</title>
-
-  <!-- Inter font & styles -->
+  <!-- Inter font + main CSS -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
-
   <!-- Google reCAPTCHA -->
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
-
-  <!-- TOP: spinning V logo -->
+  <!-- TOP: half-spin V logo -->
   <div class="logo-wrap">
     <img src="v-logo.png" alt="VeriDwell V" class="logo spin-once"/>
   </div>
 
-  <!-- Main heading -->
+  <!-- Heading + subtitle -->
   <h1 class="main-title">Join the VeriDwell community</h1>
   <p class="subtitle">Where verified is your new home secured.</p>
 
@@ -27,31 +24,31 @@
   <div class="role-container">
     <div class="role" data-role="renter">
       <img src="icon-renter.svg" alt="" class="role-icon"/>
-      <span class="role-label">Renter</span>
+      <span class="role-text">Renter</span>
     </div>
     <div class="role" data-role="landlord">
       <img src="icon-landlord.svg" alt="" class="role-icon"/>
-      <span class="role-label">Landlord</span>
+      <span class="role-text">Landlord</span>
     </div>
     <div class="role" data-role="management">
       <img src="icon-management.svg" alt="" class="role-icon"/>
-      <span class="role-label">Management Company</span>
+      <span class="role-text">Management Company</span>
     </div>
   </div>
 
-  <!-- EXPANDED FORM + PREVIEW IMAGE -->
-  <div class="form-preview-wrap">
-    <div class="bubble-group">
+  <!-- FORM + PREVIEW -->
+  <div class="form-preview">
+    <div class="bubbles">
       <div class="bubble" data-field="name">
-        <input type="text" placeholder="Your name" required/>
-        <span class="check">✓</span>
+        <input type="text" placeholder="Your name" required>
+        <span class="bubble-check">✓</span>
       </div>
       <div class="bubble" data-field="email">
-        <input type="email" placeholder="Your email" required/>
-        <span class="check">✓</span>
+        <input type="email" placeholder="Your email" required>
+        <span class="bubble-check">✓</span>
       </div>
     </div>
-    <div class="selected-preview">
+    <div class="preview-img-wrap">
       <img src="" alt="" id="preview-img"/>
     </div>
   </div>
@@ -59,10 +56,9 @@
   <!-- reCAPTCHA -->
   <div class="g-recaptcha" data-sitekey="6LdVaY0rAAAAAHJWgsSBnTlAxTaQiGrgqF-gZXSz"></div>
 
-  <!-- BOTTOM: previews & footer -->
-  <section class="bottom-section">
-    <!-- Left preview card -->
-    <div class="preview-card">
+  <!-- BOTTOM: cards + footer -->
+  <section class="bottom">
+    <div class="card">
       <h2>Rent Without the Risk.</h2>
       <ul>
         <li>100% Verified Properties</li>
@@ -73,14 +69,12 @@
       <p class="caption">Your home Verified!</p>
     </div>
 
-    <!-- Center logo & © -->
     <div class="footer-center">
       <img src="veridwell-logo.png" alt="VeriDwell Logo" class="footer-logo"/>
-      <p class="copyright">© VeriDwell</p>
+      <span class="copyright">© VeriDwell</span>
     </div>
 
-    <!-- Right preview card -->
-    <div class="preview-card">
+    <div class="card">
       <h2>Verify Tenants Quickly.</h2>
       <ul>
         <li>Complete Applicant Screenings</li>
@@ -95,42 +89,40 @@
   <!-- INTERACTIONS -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // 1) Logo: remove spin class after one spin
+      // 1) Logo spin removal
       const logo = document.querySelector('.spin-once');
-      logo.addEventListener('animationend', () => {
-        logo.classList.remove('spin-once');
-      });
+      logo.addEventListener('animationend', () => logo.classList.remove('spin-once'));
 
-      // 2) Role click -> expand bubbles + show preview img
-      document.querySelectorAll('.role').forEach(r => {
+      // 2) Role selection
+      const roleEls = document.querySelectorAll('.role');
+      const previewImg = document.getElementById('preview-img');
+      const bubbles = document.querySelector('.bubbles');
+      const bubbleEls = document.querySelectorAll('.bubble');
+      roleEls.forEach(r => {
         r.addEventListener('click', () => {
-          // 2a) Highlight selected button
-          document.querySelectorAll('.role').forEach(x => x.classList.remove('selected'));
+          // highlight
+          roleEls.forEach(x => x.classList.remove('selected'));
           r.classList.add('selected');
-
-          // 2b) Expand bubbles
-          document.querySelector('.bubble-group').classList.add('active');
-
-          // 2c) Show correct preview image
-          const role = r.dataset.role;
-          const imgMap = {
-            renter:  'photo2.png',
-            landlord:'photo1.png',
-            management:'photo2.png'
+          // show form & bubbles
+          bubbles.classList.add('active');
+          // load preview image
+          const map = {
+            renter: 'photo2.png',
+            landlord: 'photo1.png',
+            management: 'photo2.png'
           };
-          document.getElementById('preview-img').src = imgMap[role] || '';
+          previewImg.src = map[r.dataset.role] || '';
         });
       });
 
-      // 3) Bubble blur -> collapse + checkmark
-      document.querySelectorAll('.bubble').forEach(bub => {
-        const input = bub.querySelector('input');
-        input.addEventListener('blur', () => {
-          const nameVal = document.querySelector('.bubble[data-field="name"] input').value.trim();
-          const emailVal= document.querySelector('.bubble[data-field="email"] input').value.trim();
-          if (nameVal && emailVal) {
-            document.querySelector('.bubble-group').classList.remove('active');
-            document.querySelectorAll('.bubble').forEach(b => b.classList.add('done'));
+      // 3) Bubble blur -> done
+      bubbleEls.forEach(b => {
+        const inp = b.querySelector('input');
+        inp.addEventListener('blur', () => {
+          const vals = [...bubbleEls].map(x=>x.querySelector('input').value.trim());
+          if (vals.every(v=>v!=='') && document.querySelector('.role.selected')) {
+            bubbles.classList.remove('active');
+            bubbleEls.forEach(x=>x.classList.add('done'));
           }
         });
       });
