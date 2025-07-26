@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VeriDwell – Coming Soon</title>
 
-  <!-- Inter font + styles -->
+  <!-- Inter font & styles -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
 
@@ -14,90 +14,124 @@
 </head>
 <body>
 
-  <!-- 1) Logo (one-time 180° spin) -->
+  <!-- TOP: spinning V logo -->
   <div class="logo-wrap">
-    <img src="veridwell-logo.png"
-         alt="VeriDwell V logo"
-         class="logo spin-once"/>
+    <img src="v-logo.png" alt="VeriDwell V" class="logo spin-once"/>
   </div>
 
-  <!-- 2) Heading + subtitle -->
+  <!-- Main heading -->
   <h1 class="main-title">Join the VeriDwell community</h1>
   <p class="subtitle">Where verified is your new home secured.</p>
 
-  <!-- 3) Three bubbles -->
-  <div class="bubble-container">
-    <div class="bubble" data-role="Renter">
-      <span class="label">Renter</span>
-      <div class="bubble-form">
-        <input type="text" name="name" placeholder="Your name" required/>
-        <input type="email" name="email" placeholder="Your email" required/>
-        <button type="submit">Submit</button>
-      </div>
-      <span class="check">✓</span>
+  <!-- ROLE BUTTONS -->
+  <div class="role-container">
+    <div class="role" data-role="renter">
+      <img src="icon-renter.svg" alt="" class="role-icon"/>
+      <span class="role-label">Renter</span>
     </div>
-
-    <div class="bubble" data-role="Landlord">
-      <span class="label">Landlord</span>
-      <div class="bubble-form">
-        <input type="text" name="name" placeholder="Your name" required/>
-        <input type="email" name="email" placeholder="Your email" required/>
-        <button type="submit">Submit</button>
-      </div>
-      <span class="check">✓</span>
+    <div class="role" data-role="landlord">
+      <img src="icon-landlord.svg" alt="" class="role-icon"/>
+      <span class="role-label">Landlord</span>
     </div>
-
-    <div class="bubble" data-role="Management">
-      <span class="label">Management Company</span>
-      <div class="bubble-form">
-        <input type="text" name="name" placeholder="Your name" required/>
-        <input type="email" name="email" placeholder="Your email" required/>
-        <button type="submit">Submit</button>
-      </div>
-      <span class="check">✓</span>
+    <div class="role" data-role="management">
+      <img src="icon-management.svg" alt="" class="role-icon"/>
+      <span class="role-label">Management Company</span>
     </div>
   </div>
 
-  <!-- 4) reCAPTCHA widget -->
+  <!-- EXPANDED FORM + PREVIEW IMAGE -->
+  <div class="form-preview-wrap">
+    <div class="bubble-group">
+      <div class="bubble" data-field="name">
+        <input type="text" placeholder="Your name" required/>
+        <span class="check">✓</span>
+      </div>
+      <div class="bubble" data-field="email">
+        <input type="email" placeholder="Your email" required/>
+        <span class="check">✓</span>
+      </div>
+    </div>
+    <div class="selected-preview">
+      <img src="" alt="" id="preview-img"/>
+    </div>
+  </div>
+
+  <!-- reCAPTCHA -->
   <div class="g-recaptcha" data-sitekey="6LdVaY0rAAAAAHJWgsSBnTlAxTaQiGrgqF-gZXSz"></div>
 
-  <!-- 5) Preview images -->
-  <div class="images">
-    <img src="photo1.png" alt="Preview 1"/>
-    <img src="photo2.png" alt="Preview 2"/>
-  </div>
+  <!-- BOTTOM: previews & footer -->
+  <section class="bottom-section">
+    <!-- Left preview card -->
+    <div class="preview-card">
+      <h2>Rent Without the Risk.</h2>
+      <ul>
+        <li>100% Verified Properties</li>
+        <li>Deposits Held Securely in Escrow</li>
+        <li>Payments Reported to Build Your Credit</li>
+      </ul>
+      <img src="photo2.png" alt="Happy couple"/>
+      <p class="caption">Your home Verified!</p>
+    </div>
 
-  <!-- 6) Footer with full-color logo & slogan -->
-  <footer class="footer">
-    <img src="veridwell-logo.png" alt="VeriDwell Logo" class="footer-logo"/>
-    <p class="slogan">Verified Rentals Made Easy</p>
-  </footer>
+    <!-- Center logo & © -->
+    <div class="footer-center">
+      <img src="veridwell-logo.png" alt="VeriDwell Logo" class="footer-logo"/>
+      <p class="copyright">© VeriDwell</p>
+    </div>
 
-  <!-- 7) Bubble interaction script -->
+    <!-- Right preview card -->
+    <div class="preview-card">
+      <h2>Verify Tenants Quickly.</h2>
+      <ul>
+        <li>Complete Applicant Screenings</li>
+        <li>Streamlined Rent Collection</li>
+        <li>No Upfront Cost to List Properties</li>
+      </ul>
+      <img src="photo1.png" alt="Happy landlord"/>
+      <p class="caption">Your home Verified!</p>
+    </div>
+  </section>
+
+  <!-- INTERACTIONS -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Remove spin class after first animation
+      // 1) Logo: remove spin class after one spin
       const logo = document.querySelector('.spin-once');
-      logo.addEventListener('animationend', () => logo.classList.remove('spin-once'));
+      logo.addEventListener('animationend', () => {
+        logo.classList.remove('spin-once');
+      });
 
-      // Bubble open/close + checkmark
-      document.querySelectorAll('.bubble').forEach(bubble => {
-        bubble.addEventListener('click', () => {
-          if (!bubble.classList.contains('filled')) {
-            bubble.classList.toggle('open');
-            if (bubble.classList.contains('open')) {
-              bubble.querySelector('input').focus();
-            }
-          }
+      // 2) Role click -> expand bubbles + show preview img
+      document.querySelectorAll('.role').forEach(r => {
+        r.addEventListener('click', () => {
+          // 2a) Highlight selected button
+          document.querySelectorAll('.role').forEach(x => x.classList.remove('selected'));
+          r.classList.add('selected');
+
+          // 2b) Expand bubbles
+          document.querySelector('.bubble-group').classList.add('active');
+
+          // 2c) Show correct preview image
+          const role = r.dataset.role;
+          const imgMap = {
+            renter:  'photo2.png',
+            landlord:'photo1.png',
+            management:'photo2.png'
+          };
+          document.getElementById('preview-img').src = imgMap[role] || '';
         });
-        const inputs = bubble.querySelectorAll('input');
-        inputs.forEach(input => {
-          input.addEventListener('blur', () => {
-            if ([...inputs].every(i => i.value.trim())) {
-              bubble.classList.remove('open');
-              bubble.classList.add('filled');
-            }
-          });
+      });
+
+      // 3) Bubble blur -> collapse + checkmark
+      document.querySelectorAll('.bubble').forEach(bub => {
+        const input = bub.querySelector('input');
+        input.addEventListener('blur', () => {
+          const nameVal = document.querySelector('.bubble[data-field="name"] input').value.trim();
+          const emailVal= document.querySelector('.bubble[data-field="email"] input').value.trim();
+          if (nameVal && emailVal) {
+            document.querySelector('.bubble-group').classList.remove('active');
+            document.querySelectorAll('.bubble').forEach(b => b.classList.add('done'));
+          }
         });
       });
     });
